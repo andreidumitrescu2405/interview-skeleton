@@ -26,7 +26,7 @@ public class Book {
     private String productCode;
 
     public void generateSeoName() {
-        this.seoName = author + "-" + title + "  (" + year + ")";
+        this.seoName = author + " - " + title + " (" + year + ")";
     }
 
     public void generateProductCode() {
@@ -37,12 +37,14 @@ public class Book {
 
         StringBuilder codeBuilder = new StringBuilder();
         for (char ch : seoName.toCharArray()) {
-            if (ch == '(' || ch == ')' || ch == '-') {
+            if (ch == '(' || ch == ')' || ch == '-' || ch == ' ') {
                 codeBuilder.append('.');
             } else if ("AEIOUaeiou".contains(String.valueOf(ch))) {
                 codeBuilder.append('1');
             } else if (Character.isAlphabetic(ch)) {
                 codeBuilder.append('0');
+            } else if (Character.isDigit(ch)) {
+                codeBuilder.append(ch);
             }
         }
         this.productCode = codeBuilder.toString();
