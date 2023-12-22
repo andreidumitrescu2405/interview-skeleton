@@ -2,10 +2,8 @@ package com.example.interviewskeleton.controller;
 
 import com.example.interviewskeleton.service.ThirdProblemService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -15,7 +13,7 @@ public class ThirdProblemController {
     private final ThirdProblemService thirdProblemService;
 
     @GetMapping("/greet/{name}")
-    public String greet(@PathVariable String name, @RequestParam(defaultValue = "en") String locale) {
-        return thirdProblemService.getGreeting(name, locale);
+    public ResponseEntity<String> greet(@PathVariable String name, @RequestParam(defaultValue = "en") String locale, @RequestHeader(name = "X-Auth-Token", required = false) String authToken) {
+        return thirdProblemService.getGreeting(name, locale, authToken);
     }
 }

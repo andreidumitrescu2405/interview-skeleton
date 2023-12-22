@@ -2,6 +2,7 @@ package com.example.interviewskeleton.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalTime;
@@ -28,7 +29,10 @@ public class ThirdProblemService {
     @Value("${greeting.evening.es}")
     private String eveningEs;
 
-    public String getGreeting(String name, String locale) {
+    public ResponseEntity<String> getGreeting(String name, String locale, String authToken) {
+        if (!"such-secure-much-wow".equals(authToken)) {
+            return ResponseEntity.status(403).body("Forbidden: Invalid or missing X-Auth-Token header");
+        }
         String timeOfDay = getTimeOfDay();
         String greetingType =  switch (timeOfDay) {
             case "morning" -> locale.equals("en") ? morningEn : morningEs;
@@ -36,7 +40,8 @@ public class ThirdProblemService {
             case "evening" -> locale.equals("en") ? eveningEn : eveningEs;
             default -> "Default greeting";
         };
-        return greetingType.replace("{name}", name);
+        String greetingMessage = greetingType.replace("{name}", name);
+        return ResponseEntity.ok(greetingMessage);
     }
 
     private String getTimeOfDay() {
