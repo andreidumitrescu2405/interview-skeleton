@@ -10,7 +10,7 @@ import java.util.Objects;
 // list3 = [0,1,7,8]
 // expectedlist = [1]
 
-public class TechnicalInterview {
+public class QualitestElbitInterview {
 
     public List<Integer> intersectionOfLists(List<Integer> list1, List<Integer> list2, List<Integer> list3) {
         List<Integer> results = new ArrayList<>();
